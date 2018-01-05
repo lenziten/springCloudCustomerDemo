@@ -21,9 +21,6 @@ public class CustomerController {
 	
 	private final Logger logger = Logger.getLogger(getClass());
 	
-	@Autowired
-	private DiscoveryClient client;
-	
     @Autowired
     private ApplicationContext appContext;
     
@@ -35,7 +32,8 @@ public class CustomerController {
     
     @RequestMapping(value="/add",method=RequestMethod.GET)
     public String add(){
-    	return restTemplate.getForEntity("http://compute-service/exit/add?a=10&b=20", String.class).getBody();
+    	StringBuilder sb = new StringBuilder();
+    	return sb.append("restTemplate:"+restTemplate.getForEntity("http://compute-service/exit/add?a=10&b=20", String.class).getBody()+"\n").toString();
     }
 	
     @RequestMapping(value="/test",method=RequestMethod.GET)
