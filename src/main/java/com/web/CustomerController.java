@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.domain.User;
+import com.service.ComputeService;
 import com.service.DemoComponent;
 import com.service.UserService;
 
@@ -27,13 +28,17 @@ public class CustomerController {
     @Autowired
     private UserService userService;
     
+//    @Autowired
+//    private RestTemplate restTemplate;
+    
     @Autowired
-    private RestTemplate restTemplate;
+    private ComputeService computeService;
     
     @RequestMapping(value="/add",method=RequestMethod.GET)
     public String add(){
     	StringBuilder sb = new StringBuilder();
-    	return sb.append("restTemplate:"+restTemplate.getForEntity("http://compute-service/exit/add?a=10&b=20", String.class).getBody()+"\n").toString();
+//    	return sb.append("restTemplate:"+restTemplate.getForEntity("http://compute-service/exit/add?a=10&b=20", String.class).getBody()+"\n").toString();//调用服务
+    	return sb.append("restTemplate:"+computeService.addService()).toString();//注入式调用服务
     }
 	
     @RequestMapping(value="/test",method=RequestMethod.GET)
@@ -53,7 +58,7 @@ public class CustomerController {
     }
     
     @RequestMapping("/shutDown")
-	public String shutDownBoot(int returnCode){
+	public String shutDownBoot(){
     	int result = SpringApplication.exit(appContext);
 		return String.valueOf(result);
 	}
